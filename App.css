@@ -65,7 +65,12 @@
   position: absolute;
   top: 0px;
   display: none;
-  -webkit-animation:enemy 1s linear forwards infinite;
+  /*-webkit-animation:enemy 1s linear forwards infinite;*/
+  -webkit-animation-name:enemy;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-timing-function: linear;
+  /*-webkit-animation-direction: forwards;*/
+  -webkit-animation-iteration-count: infinite;
 }
 /*.enemy{ -webkit-animation:enemy 1s linear forwards; }*/
 
@@ -88,10 +93,49 @@
 
 .loc0{
   left: 120px;
-  /*-webkit-animation:enemy 1s linear forwards infinite;*/
 }
 .loc1{
   right: 120px;
-  /*-webkit-animation:enemy 1s linear forwards infinite;*/
 }
+
+.kilo{
+  position: absolute;
+  top: 20px;
+  right: 15px;
+  height: 100px;
+  width: 100px;
+  border: 10px solid;
+  border-radius: 50%;
+  font-size: 36px;
+  line-height: 100px;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.failbub{
+    width: 120px;
+    padding: 20px;
+    position: absolute;
+    top: 250px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #bd3333;
+    color: #fff;
+    text-align: center;
+    display: none;
+}
+
+.failtext{
+  display: block;
+
+}
+
+.retry{
+  display: block;
+  background: #000;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
 

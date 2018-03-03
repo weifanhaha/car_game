@@ -11,17 +11,20 @@ var GameBoard = createReactClass({
             heroLoc: 0,
             enemyLoc: 0,
             enemyType : 0,
-            // aniEnd : true,
-            kilometer:0,
+            kilometer: 0,
+            changePer: 1000,
         }
     },
 
     gameStart() {
         this.setState({
-            gameState: 1
+            gameState: 1,
+            kilometer: 0,
+            changePer: 1000,
         })
         this.createEnemy(true);
         this.gameTick(true);
+        document.getElementById('failbub').style.display='none';
     },
 
     gameHandle(e) {
@@ -40,14 +43,12 @@ var GameBoard = createReactClass({
     changeEnemyType(){
         var type = Math.floor(Math.random()*3);
         var loc = Math.round(Math.random());
-        this.setState({enemyLoc : loc});
-        this.setState({enemyType : type});
+        this.setState({enemyLoc : loc, enemyType : type});
     },
 
     createEnemy(turnOn){
-        // var enemies = 0;
         if(turnOn){
-            this.Enemies = setInterval(this.changeEnemyType, 1000);
+            this.Enemies = setInterval(this.changeEnemyType, this.state.changePer);
         }
         else{
             clearInterval(this.Enemies);
@@ -56,7 +57,8 @@ var GameBoard = createReactClass({
 
     bombOrNot(){
         var heroAt = 500-150;   // top of hero - height of enemy
-        var trs, dis, kilometer = 0;
+        var kilometer = this.state.kilometer;
+        var trs, dis;
 
         var heroLoc = this.state.heroLoc,
             enemyLoc = this.state.enemyLoc;
@@ -73,6 +75,12 @@ var GameBoard = createReactClass({
         }
         kilometer ++;
         this.setState({kilometer: kilometer});
+        // if(kilometer % 10 == 0){
+        //     var changePer = this.state.changePer - 10;
+        //     var e = document.getElementsByClassName('enemy')[0]
+        //     e.style["-webkit-animation-duration"] = changePer/1000 + 's'
+        //     this.setState({changePer: changePer});
+        // }
     },
 
     gameTick(turnOn){
@@ -90,6 +98,7 @@ var GameBoard = createReactClass({
         this.setState({gameState: 0});
         this.createEnemy(false);
         this.gameTick(false);
+        document.getElementById('failbub').style.display='block';
     },
 
     // componentWillMount(){
@@ -115,10 +124,10 @@ var GameBoard = createReactClass({
                     <div className={enemyCls} id="enemy" ref="enemy"></div>
                 </div>
                 <span className = { state.gameState? "start hide":"start" } onClick = { this.gameStart }> Start </span>
-                <span className="kilo"></span>
-                <div className="failbub">
-                    <span className="failtext"></span>
-                    <span className="retry"></span>
+                <span className="kilo">{ state.kilometer }</span>
+                <div className="failbub" id="failbub">
+                    <span className="failtext">Game Over!<br/>You run <br/>{state.kilometer} kilo</span>
+                    <span className="retry" onClick = { this.gameStart }>Retry</span>
                 </div>
             </div>
         )
